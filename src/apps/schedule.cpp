@@ -10,10 +10,10 @@
 
 static byte selectedDay, selectedLesson;
 
-static char *dayNames[] = {"", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"};
+static char *dayNames[] = {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"};
 static char *monthNames[] = {"Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Decembre"};
 
-static char *lessonNames[] = {"Histoire-Geo", "Anglais", "Physique-Chimie", "SI", "ISN", "Allemand", "Mathematiques", "Philosophie", "EPS"};
+static char *lessonNames[] = {"Histoire-Geo", "Anglais", "Physique-Chimie", "Sciences Ingenieur", "ISN", "Allemand", "Mathematiques", "Philosophie", "EPS"};
 static char *roomNames[] = {"E205", "E218", "E187", "D143", "E215", "E188", "E206", "E303", "P14", "C158", "TP", "E86", "P21", "E305"};
 struct hour {
 	byte lesson:4;
@@ -105,11 +105,11 @@ static void drawDay(void)
 {
 	clearLcdRow(1, 0, 20);
 	lcd.setCursor(0, 1);
-	lcd.print(dayNames[day()]);
+	lcd.print(dayNames[selectedDay]);
 	lcd.write(' ');
 	lcd.print(day());
 	lcd.write(' ');
-	lcd.print(monthNames[month()]);
+	lcd.print(monthNames[month() - 1]);
 }
 
 static void drawSchedule(void)
@@ -131,6 +131,48 @@ static void drawSchedule(void)
 	lcd.print(lessonNames[schedule[selectedDay][selectedLesson].lesson]);
 }
 
+static void changeDay(byte next)
+{
+	if (next) {
+		if (selectedDay++ == 4)
+			selectedDay = 0;
+	} else {
+		if (selectedDay-- == 0)
+			selectedDay = 4;
+	}
+
+	// I have no idea why, but if you put the following statement
+	// under the two if above, it takes 4 byte less of code
+	selectedLesson = 0;
+
+	drawDay();
+	drawSchedule();
+}
+
+static void changeLesson(byte next)
+{
+	if (next) {
+		if (selectedLesson == 9) {
+			selectedLesson = 0;
+		} else {
+			while (schedule[selectedDay][++selectedLesson].lesson == 15) {
+				if (selectedLesson == 9) {
+					selectedLesson = 0;
+					break;
+				}
+			}
+		}
+	} else {
+		if (selectedLesson == 0)
+			selectedLesson = 10;
+
+		while (schedule[selectedDay][--selectedLesson].lesson == 15)
+			;
+	}
+
+	drawSchedule();
+}
+
 static void quit(byte data)
 {
 	launchMenu();
@@ -140,12 +182,14 @@ void launchSchedule(void)
 {
 	lcd.clear();
 	drawTitle(PSTR("EMPLOI DU TEMPS"));
+	selectedDay = weekday() - 2;
+	selectedLesson = 0;
 	drawDay();
 	drawSchedule();
 
-	setSingleClickHandler(UP, NULL, 0);
-	setSingleClickHandler(DOWN, NULL, 0);
-	setSingleClickHandler(LEFT, NULL, 0);
-	setSingleClickHandler(RIGHT, NULL, 0);
+	setSingleClickHandler(UP, changeLesson, false);
+	setSingleClickHandler(DOWN, changeLesson, true);
+	setSingleClickHandler(LEFT, changeDay, false);
+	setSingleClickHandler(RIGHT, changeDay, true);
 	setSingleClickHandler(ENTER, quit, 0);
 }

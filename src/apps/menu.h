@@ -1,6 +1,8 @@
 #ifndef MENU_H
 #define MENU_H
 
-void launchMenu(void);
+#include "login.h"
+
+void launchMenu();
 
 #endif

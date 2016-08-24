@@ -5,6 +5,7 @@
 
 /* ----- General settings ----- */
 //#define DEBUG            // Activate serial messages & internal LED blinking every 1000 loop cycle
+//#define SERIAL           // Activate Serial
 #define SERIAL_BAUD 9600 // Serial communication speed
 
 #define LANG 1 // 0 = English, 1 = French
@@ -16,7 +17,7 @@
 #define DELAY_BEFORE_SCREENSAVER_WHILE_UNLOGGED 15 // In s
 #define DELAY_BEFORE_SCREENSAVER_WHILE_LOGGED   60 // Disconnect user. In s
 
-#define BUZZER_PIN 5
+#define BUZZER_PIN 12
 #define PHOTORESISTOR_PIN A7
 
 //#define ALARM // Define to activate alarm
@@ -32,6 +33,7 @@ static const unsigned char buttonsPins[] = {
 
 
 /* ----- App settings ----- */
-
+#define STUDENT_CODE  1100
+#define OPERATOR_CODE 100
 
 #endif

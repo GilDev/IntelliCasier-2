@@ -7,7 +7,7 @@
 #include "apps/login.h"
 
 void setup() {
-	#ifdef DEBUG
+	#ifdef DEBUG or SERIAL
 		Serial.begin(SERIAL_BAUD);
 	#endif
 
@@ -29,7 +29,7 @@ void setup() {
 	eventsInit();
 	//alarmInit();
 	launchLogin();
-	setTime(22, 11, 0, 4, 8, 16);
+	setTime(10, 0, 0, 6, 9, 2016);
 
 	#ifdef DEBUG
 		Serial.print(F("Ready"));

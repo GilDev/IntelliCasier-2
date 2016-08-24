@@ -52,6 +52,17 @@ static byte downArrow[] = {
 	B00100
 };
 
+static byte eAccentAigu[] = {
+	B00010,
+	B00100,
+	B01110,
+	B10001,
+	B11111,
+	B10000,
+	B01110,
+	B00000
+};
+
 void drawTitle(const char *title)
 {
 	char buffer[21];
@@ -97,7 +108,7 @@ static void displayMenuItems(void)
 		i = menuSelectedItem - 1;
 
 	byte row;
-	for (row = 1; row < ((menuNumberOfItems > 3) ? 4 : menuNumberOfItems); row++) {
+	for (row = 1; row < ((menuNumberOfItems > 3) ? 4 : menuNumberOfItems + 1); row++) {
 		strcpy_P(buffer, (char *) pgm_read_word(&(menuItemNames[i++])));
 		printLcd(2, row, buffer);
 	}
@@ -175,8 +186,8 @@ void displayMenu(byte numberOfItems, const char* const itemNames[], void (*itemC
 	lcd.setCursor(0, 1);
 	lcd.write(LCD_RIGHT_ARROW);
 
-	setSingleClickHandler(UP, changeSelection, false);
-	setSingleClickHandler(DOWN, changeSelection, true);
+	setRepeatClickHandler(UP, 300, changeSelection, false);
+	setRepeatClickHandler(DOWN, 300, changeSelection, true);
 	setSingleClickHandler(ENTER, launchApp, 0);
 	setSingleClickHandler(RIGHT, launchApp, 0);
 }
@@ -249,4 +260,5 @@ void lcdInit(void)
 	lcd.createChar(LCD_UP_ARROW, upArrow);
 	lcd.createChar(LCD_RIGHT_ARROW, rightArrow);
 	lcd.createChar(LCD_DOWN_ARROW, downArrow);
+	lcd.createChar(LCD_E_ACCENT_AIGU, eAccentAigu);
 }

@@ -3,10 +3,14 @@
 
 #include <LiquidCrystal_I2C.h>
 
-#define LCD_BLACK_SQUARE 0
-#define LCD_UP_ARROW     1
-#define LCD_RIGHT_ARROW  2
-#define LCD_DOWN_ARROW   3
+
+enum {
+	LCD_BLACK_SQUARE,
+	LCD_UP_ARROW,
+	LCD_RIGHT_ARROW,
+	LCD_DOWN_ARROW,
+	LCD_E_ACCENT_AIGU
+};
 
 extern LiquidCrystal_I2C lcd;
 

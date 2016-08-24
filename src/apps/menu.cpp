@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <avr/pgmspace.h>
+#include "about.h"
 #include "login.h"
 #include "schedule.h"
 #include "../config.h"
@@ -8,49 +9,62 @@
 #include "../screensaver.h"
 #include <avr/pgmspace.h>
 
-static void exitMenu(void);
+/* ----- Student Menu ----- */
 
-struct selection {
-	byte text;
-	byte icon[8];
-	byte menuToOpen; // 0xFF = call callback() instead
-	void (*callback)(void);
+static const char menuStudentItem1[] PROGMEM = "Emploi du temps";
+static const char menuStudentItem2[] PROGMEM = "Informations";
+static const char menuStudentItem3[] PROGMEM = "Devoirs";
+static const char menuStudentItem4[] PROGMEM = "Twitter";
+static const char menuStudentItem5[] PROGMEM = "A propos";
+static const char menuStudentItem6[] PROGMEM = "Deconnexion";
+static const char* const menuStudent[] PROGMEM = {
+	menuStudentItem1,
+	menuStudentItem2,
+	menuStudentItem3,
+	menuStudentItem4,
+	menuStudentItem5,
+	menuStudentItem6
 };
-
-byte currentMenu;
-byte currentSelection;
-
-static const char item1[] PROGMEM = "Emploi du temps";
-static const char item2[] PROGMEM = "Informations";
-static const char item3[] PROGMEM = "Devoirs";
-static const char item4[] PROGMEM = "Twitter";
-static const char item5[] PROGMEM = "A propos";
-static const char item6[] PROGMEM = "Deconnexion";
-static const char* const menuItemNames[] PROGMEM = {
-	item1,
-	item2,
-	item3,
-	item4,
-	item5,
-	item6
-};
-
-static void (*menuItemCallbacks[])(void) = {
+static void (*menuStudentCallbacks[])(void) = {
 	launchSchedule,
 	NULL,
 	NULL,
 	NULL,
-	NULL,
+	launchAbout,
 	launchLogin
 };
 
-#define NUMBER_MENU_ITEM (sizeof menuItemNames / sizeof *menuItemNames) // Divide by two because pointers are 16 bits
+#define NUMBER_MENU_STUDENT_ITEM (sizeof menuStudent / sizeof *menuStudent)
 
-void launchMenu(void)
+
+/* ----- Operator Menu ----- */
+
+static const char menuOperatorItem1[] PROGMEM = "Reglages";
+static const char menuOperatorItem2[] PROGMEM = "A propos";
+static const char menuOperatorItem3[] PROGMEM = "Deconnexion";
+static const char* const menuOperator[] PROGMEM = {
+	menuOperatorItem1,
+	menuOperatorItem2,
+	menuOperatorItem3
+};
+static void (*menuOperatorCallbacks[])(void) = {
+	NULL,
+	launchAbout,
+	launchLogin
+};
+
+#define NUMBER_MENU_OPERATOR_ITEM (sizeof menuOperator / sizeof *menuOperator)
+
+
+void launchMenu()
 {
 	lcd.clear();
 	drawTitle(PSTR("MENU PRINCIPAL"));
-	displayMenu(NUMBER_MENU_ITEM, menuItemNames, menuItemCallbacks);
+	if (connectedUser == STUDENT) {
+		displayMenu(NUMBER_MENU_STUDENT_ITEM, menuStudent, menuStudentCallbacks);
+	} else {
+		displayMenu(NUMBER_MENU_OPERATOR_ITEM, menuOperator, menuOperatorCallbacks);
+	}
 }
 
 static void exitMenu(void)

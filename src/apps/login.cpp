@@ -1,9 +1,11 @@
 #include <Arduino.h>
 #include "menu.h"
+#include "../config.h"
 #include "../events.h"
 #include "../lcd.h"
 
-static byte code[4]; 
+byte connectedUser;
+static byte code[4];
 static byte currentColumn;
 static TimerId eraseWrongPasswordTimer = -1;
 
@@ -66,7 +68,12 @@ static void login(byte data)
 		codeInt += code[i] * multiplier;
 
 	cancelTimerEvent(&eraseWrongPasswordTimer);
-	if (codeInt == 1100) {
+	if (codeInt == STUDENT_CODE) {
+		connectedUser = STUDENT;
+		lcd.noBlink();
+		launchMenu();
+	} else if (codeInt == OPERATOR_CODE) {
+		connectedUser = OPERATOR;
 		lcd.noBlink();
 		launchMenu();
 	} else {
