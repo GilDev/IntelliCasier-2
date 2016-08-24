@@ -10,9 +10,6 @@
 
 static byte selectedDay, selectedLesson;
 
-static char *dayNames[] = {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"};
-static char *monthNames[] = {"Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Decembre"};
-
 static char *lessonNames[] = {"Histoire-Geo", "Anglais", "Physique-Chimie", "Sciences Ingenieur", "ISN", "Allemand", "Mathematiques", "Philosophie", "EPS"};
 static char *roomNames[] = {"E205", "E218", "E187", "D143", "E215", "E188", "E206", "E303", "P14", "C158", "TP", "E86", "P21", "E305"};
 struct hour {
@@ -101,17 +98,6 @@ static struct hour schedule[6][10] = {
 	}
 };
 
-static void drawDay(void)
-{
-	clearLcdRow(1, 0, 20);
-	lcd.setCursor(0, 1);
-	lcd.print(dayNames[selectedDay]);
-	lcd.write(' ');
-	lcd.print(day());
-	lcd.write(' ');
-	lcd.print(monthNames[month() - 1]);
-}
-
 static void drawSchedule(void)
 {
 	clearLcdRow(2, 0, 20);
@@ -145,7 +131,7 @@ static void changeDay(byte next)
 	// under the two if above, it takes 4 byte less of code
 	selectedLesson = 0;
 
-	drawDay();
+	drawDateForSchedule(1, selectedDay);
 	drawSchedule();
 }
 
@@ -184,7 +170,7 @@ void launchSchedule(void)
 	drawTitle(PSTR("EMPLOI DU TEMPS"));
 	selectedDay = weekday() - 2;
 	selectedLesson = 0;
-	drawDay();
+	drawDate(1, now());
 	drawSchedule();
 
 	setSingleClickHandler(UP, changeLesson, false);

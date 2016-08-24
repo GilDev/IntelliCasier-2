@@ -13,11 +13,11 @@ void launchAbout(void)
 {
 	lcd.clear();
 	drawTitle(PSTR("A PROPOS"));
-	printLcd(1, 1, PSTR("IntelliCasier v1.0"));
-	printLcd(1, 2, PSTR("R"));
+	printLcdFromFlash(1, 1, PSTR("IntelliCasier v1.0"));
+	printLcdFromFlash(1, 2, PSTR("R"));
 	lcd.write(LCD_E_ACCENT_AIGU);
-	lcd.print(PSTR("alise par GilDev"));
-	printLcd(2, 3, PSTR("http://gildev.tk"));
+	printLcdFromFlash(3, 2, PSTR("alise par GilDev"));
+	printLcdFromFlash(2, 3, PSTR("http://gildev.tk"));
 
 	setSingleClickHandler(UP, quit, 0);
 	setSingleClickHandler(DOWN, quit, 0);

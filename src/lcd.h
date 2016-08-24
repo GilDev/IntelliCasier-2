@@ -2,7 +2,7 @@
 #define LCD_H
 
 #include <LiquidCrystal_I2C.h>
-
+#include <Time.h>
 
 enum {
 	LCD_BLACK_SQUARE,
@@ -20,6 +20,20 @@ extern LiquidCrystal_I2C lcd;
 void lcdInit(void);
 
 /**
+ * Print date
+ * @param row   Row to print on
+ * @param day   Day to print
+ * @param month Month to print
+ */
+void drawDate(byte row, time_t t);
+
+/**
+ * Just do as this wasn't here.
+ * I'm too ashamed of it.
+ */
+void drawDateForSchedule(byte row, byte day);
+
+/**
  * Draw title at the top of the display
  * @param title Text to be printed (PROGMEM)
  */
@@ -34,12 +48,20 @@ void drawTitle(const char *title);
 void displayMenu(byte numberOfItems, const char* const itemNames[], void (*itemCallbacks[])(void));
 
 /**
- * Print text on the LCD display
- * @param x    Horizontal coordinate
- * @param y    Vertical coordinate
- * @param text Text to print
+ * Print text on the LCD display from flash memory
+ * @param x   Horizontal coordinate
+ * @param y   Vertical coordinate
+ * @param str PROGMEM string to print
  */
-#define printLcd(x, y, text) {lcd.setCursor(x, y); lcd.print(text);}
+void printLcdFromFlash(byte x, byte y, const char *str);
+
+/**
+ * Print text on the LCD display
+ * @param x   Horizontal coordinate
+ * @param y   Vertical coordinate
+ * @param str String to print
+ */
+#define printLcd(x, y, str) {lcd.setCursor(x, y); lcd.print(str);}
 
  /**
   * Clear text on an LCD display's row

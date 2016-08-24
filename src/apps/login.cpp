@@ -56,6 +56,7 @@ static void writeBlankCode(void)
 static void eraseWrongPassword(byte data)
 {
 	clearLcdRow(3, 0, 20);
+	lcd.setCursor(7 + currentColumn, 2);
 }
 
 static void login(byte data)
@@ -77,7 +78,7 @@ static void login(byte data)
 		lcd.noBlink();
 		launchMenu();
 	} else {
-		printLcd(0, 3, "Mauvais mot de passe");
+		printLcdFromFlash(0, 3, PSTR("Mauvais mot de passe"));
 		writeBlankCode();
 		eraseWrongPasswordTimer = registerTimerEvent(2000, eraseWrongPassword, 0);
 	}
@@ -88,7 +89,7 @@ void launchLogin(void)
 	lcd.clear();
 	//static const char connexion[] PROGMEM = "CONNEXION";
 	drawTitle(PSTR("CONNEXION"));
-	printLcd(3, 1, "Mot de passe :");
+	printLcdFromFlash(3, 1, PSTR("Mot de passe :"));
 
 	writeBlankCode();
 	lcd.blink();

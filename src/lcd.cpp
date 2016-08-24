@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <Wire.h>
+#include <Time.h>
 #include <avr/pgmspace.h>
 #include "config.h"
 #include "lcd.h"
@@ -62,6 +63,40 @@ static byte eAccentAigu[] = {
 	B01110,
 	B00000
 };
+
+static char *dayNames[] = {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"};
+static char *monthNames[] = {"Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Decembre"};
+
+void drawDate(byte row, time_t t)
+{
+	clearLcdRow(row, 0, 20);
+	lcd.setCursor(0, row);
+	lcd.print(dayNames[weekday(t) - 2]);
+	lcd.write(' ');
+	lcd.print(day(t));
+	lcd.write(' ');
+	lcd.print(monthNames[month(t) - 1]);
+}
+
+/* ----- Start of Hidden Area ----- */
+void drawDateForSchedule(byte row, byte weekdayGiven) // That's ugly, I know. It's temporary, I hope.
+{
+	clearLcdRow(row, 0, 20);
+	lcd.setCursor(0, row);
+	lcd.print(dayNames[weekdayGiven]);
+	lcd.write(' ');
+	lcd.print(day() + weekdayGiven - (weekday() - 2));
+	lcd.write(' ');
+	lcd.print(monthNames[month() - 1]);
+}
+/* ----- End of Hidden Area ----- */
+
+void printLcdFromFlash(byte x, byte y, const char *str) {
+	char buffer[21];
+	strcpy_P(buffer, (PGM_P) str);
+	lcd.setCursor(x, y);
+	lcd.print(buffer);
+}
 
 void drawTitle(const char *title)
 {

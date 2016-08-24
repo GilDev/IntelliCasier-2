@@ -2,6 +2,7 @@
 #include <avr/pgmspace.h>
 #include "about.h"
 #include "login.h"
+#include "options.h"
 #include "schedule.h"
 #include "../config.h"
 #include "../lcd.h"
@@ -48,7 +49,7 @@ static const char* const menuOperator[] PROGMEM = {
 	menuOperatorItem3
 };
 static void (*menuOperatorCallbacks[])(void) = {
-	NULL,
+	launchOptions,
 	launchAbout,
 	launchLogin
 };

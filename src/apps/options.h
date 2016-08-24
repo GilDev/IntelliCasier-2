@@ -1,24 +1,6 @@
-/*#ifndef OPTIONS_H
+#ifndef OPTIONS_H
 #define OPTIONS_H
 
-enum Options {
-	MATRIX_BRIGHTNESS_O,             // 0-15
-	MATRIX_SCREENSAVER_BRIGHTNESS_O, // 0-15
-	MATRIX_SCROLL_DELAY_O,
-	SNAKE_MOVE_DELAY_O,
-	FLAPPY_BIRD_FALL_DELAY_O,
-	FLAPPY_BIRD_START_DELAY_O,
-	FLAPPY_BIRD_MIN_DELAY_O,
-	FLAPPY_BIRD_SPEED_INCREASES_DELAY_O,
-	PONG_PADDLE_DELAY_O,
-	PONG_START_DELAY_O,
-	PONG_MIN_DELAY_O,
-	PONG_SPEED_INCREASES_DELAY_O
-};
-
-extern unsigned short options[];
-
-void showOptions(void); 
+void launchOptions(void); 
 
 #endif
-*/
