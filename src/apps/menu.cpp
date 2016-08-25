@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <avr/pgmspace.h>
 #include "about.h"
+#include "informations.h"
 #include "login.h"
 #include "options.h"
 #include "schedule.h"
@@ -28,7 +29,7 @@ static const char* const menuStudent[] PROGMEM = {
 };
 static void (*menuStudentCallbacks[])(void) = {
 	launchSchedule,
-	NULL,
+	launchInformations,
 	NULL,
 	NULL,
 	launchAbout,

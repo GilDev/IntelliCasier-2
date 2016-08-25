@@ -48,6 +48,12 @@ void setHoldClickHandler(ButtonId button, unsigned short delay, void (*callback)
 void setRepeatClickHandler(ButtonId button, unsigned short delay, void (*callback)(byte data), byte data);
 
 /**
+ * Remove callback of a button
+ * @param button Button to cancel
+ */
+void setNoClickHandler(ButtonId button);
+
+/**
  * Call a function after a certain amount of time
  * @param delay    Time to wait before trigerring the event in milliseconds
  * @param callback Function to call when the event triggers

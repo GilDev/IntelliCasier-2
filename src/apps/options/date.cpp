@@ -5,7 +5,7 @@
 #include "../../lcd.h"
 #include "../../events.h"
 
-byte selectedDay, selectedMonth, selectedField;
+byte selectedDay, selectedMonth, selectedHour, selectedMinute, selectedField;
 unsigned short selectedYear;
 
 enum field {DAY = 0, MONTH, YEAR, HOUR, MINUTE};
@@ -20,7 +20,13 @@ static void printEditableDate(void)
 	printLcd(9, 2, "/");
 	lcd.print(selectedYear);
 
-	lcd.setCursor(4 + selectedField * 3, 2);
+	clearLcdRow(3, 4, 14);
+
+	printLcd(6, 3, selectedHour);
+	printLcd(8, 3, "h");
+	lcd.print(selectedMinute);
+
+	lcd.setCursor((selectedField > 2) ? 6 + 3 * (selectedField - 3) : 4 + selectedField * 3, (selectedField > 2) ? 3 : 2);
 }
 
 static void changeValue(byte up)
@@ -35,6 +41,12 @@ static void changeValue(byte up)
 				break;
 			case YEAR:
 				selectedYear++;
+				break;
+			case HOUR:
+				selectedHour++;
+				break;
+			case MINUTE:
+				selectedMinute++;
 		}
 	} else {
 		switch (selectedField) {
@@ -46,6 +58,12 @@ static void changeValue(byte up)
 				break;
 			case YEAR:
 				selectedYear--;
+				break;
+			case HOUR:
+				selectedHour--;
+				break;
+			case MINUTE:
+				selectedMinute--;
 		}
 	}
 
@@ -55,18 +73,24 @@ static void changeValue(byte up)
 static void changeField(byte next)
 {
 	if (next) {
-		selectedField++;
+		if (selectedField == 4)
+			selectedField = 0;
+		else
+			selectedField++;
 	} else {
-		selectedField--;
+		if (selectedField == 0)
+			selectedField = 4;
+		else
+			selectedField--;
 	}
 
-	lcd.setCursor(4 + selectedField * 3, 2);
+	lcd.setCursor((selectedField > 2) ? 6 + 3 * (selectedField - 3) : 4 + selectedField * 3, (selectedField > 2) ? 3 : 2);
 }
 
 static void quit(byte data)
 {
 	lcd.noBlink();
-	setTime(hour(), minute(), second(), selectedDay, selectedMonth, selectedYear);
+	setTime(selectedHour, selectedMinute, 0, selectedDay, selectedMonth, selectedYear);
 	launchOptions();
 }
 

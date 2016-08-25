@@ -64,7 +64,7 @@ static byte eAccentAigu[] = {
 	B00000
 };
 
-static char *dayNames[] = {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"};
+static char *dayNames[] = {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"};
 static char *monthNames[] = {"Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Decembre"};
 
 void drawDate(byte row, time_t t)
@@ -78,7 +78,7 @@ void drawDate(byte row, time_t t)
 	lcd.print(monthNames[month(t) - 1]);
 }
 
-/* ----- Start of Hidden Area ----- */
+/* ----- Start of the area you've never seen ----- */
 void drawDateForSchedule(byte row, byte weekdayGiven) // That's ugly, I know. It's temporary, I hope.
 {
 	clearLcdRow(row, 0, 20);
@@ -89,7 +89,7 @@ void drawDateForSchedule(byte row, byte weekdayGiven) // That's ugly, I know. It
 	lcd.write(' ');
 	lcd.print(monthNames[month() - 1]);
 }
-/* ----- End of Hidden Area ----- */
+/* ----- End of the area you've never seen ----- */
 
 void printLcdFromFlash(byte x, byte y, const char *str) {
 	char buffer[21];
@@ -182,7 +182,7 @@ static void changeSelection(byte down)
 		lcd.write(' ');
 		lcd.setCursor(0, 1);
 		lcd.write(LCD_RIGHT_ARROW);
-	} else if (menuSelectedItem == menuNumberOfItems - 1) {
+	} else if (menuSelectedItem == menuNumberOfItems - 1 && menuNumberOfItems != 2) {
 		lcd.setCursor(0, 2);
 		lcd.write(' ');
 		lcd.setCursor(0, 3);

@@ -6,11 +6,14 @@
 #include "../lcd.h"
 #include "../events.h"
 
-static const char menuItem1[] PROGMEM = "Date & Heure";
+static const char menuItem1[] PROGMEM = "Retour";
+static const char menuItem2[] PROGMEM = "Date & Heure";
 static const char* const menu[] PROGMEM = {
 	menuItem1,
+	menuItem2
 };
 static void (*menuCallbacks[])(void) = {
+	launchMenu,
 	launchDate
 };
 
@@ -25,6 +28,4 @@ void launchOptions(void)
 	drawTitle(PSTR("REGLAGES"));
 
 	displayMenu((sizeof menu / sizeof *menu), menu, menuCallbacks);
-
-	setSingleClickHandler(ENTER, quit, 0);
 }

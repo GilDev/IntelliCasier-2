@@ -154,6 +154,13 @@ void setRepeatClickHandler(ButtonId button, unsigned short delay, void (*callbac
 	buttons[button].data = data;
 }
 
+void none(byte data) {}
+
+void setNoClickHandler(ButtonId button)
+{
+	buttons[button].callback = none;
+}
+
 // TIMERS
 TimerId registerTimerEvent(unsigned short delay, void (*callback)(byte data), byte data)
 {
