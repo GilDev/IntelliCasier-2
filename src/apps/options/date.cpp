@@ -12,13 +12,15 @@ enum field {DAY = 0, MONTH, YEAR, HOUR, MINUTE};
 
 static void printEditableDate(void)
 {
-	printLcd(0, 1, selectedDay);
-	printLcd(2, 1, "/");
+	clearLcdRow(2, 4, 14);
+
+	printLcd(4, 2, selectedDay);
+	printLcd(6, 2, "/");
 	lcd.print(selectedMonth);
-	printLcd(5, 1, "/");
+	printLcd(9, 2, "/");
 	lcd.print(selectedYear);
 
-	lcd.setCursor(selectedField * 3, 1);
+	lcd.setCursor(4 + selectedField * 3, 2);
 }
 
 static void changeValue(byte up)
@@ -58,7 +60,7 @@ static void changeField(byte next)
 		selectedField--;
 	}
 
-	lcd.setCursor(selectedField * 3, 1);
+	lcd.setCursor(4 + selectedField * 3, 2);
 }
 
 static void quit(byte data)
