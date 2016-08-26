@@ -14,8 +14,8 @@
 #define BUTTON_OPEN HIGH          // Default value when button is not pressed
 #define DEBOUNCE_TIME 10          // Delay where no input can change after changing state in ms
 
-#define DELAY_BEFORE_SCREENSAVER_WHILE_UNLOGGED 15 // In s
-#define DELAY_BEFORE_SCREENSAVER_WHILE_LOGGED   60 // Disconnect user. In s
+#define DELAY_BEFORE_SCREENSAVER_WHILE_UNLOGGED 10 // In s
+#define DELAY_BEFORE_SCREENSAVER_WHILE_LOGGED   30 // Disconnect user. In s
 
 #define BUZZER_PIN 12
 #define PHOTORESISTOR_PIN A7
@@ -24,10 +24,10 @@
 #define ALARM_SENSIVITY 100
 
 static const unsigned char buttonsPins[] = {
-	A3, // UP
-	A2, // RIGHT
-	13, // DOWN
-	A0, // LEFT
+	A2, // UP
+	A3, // RIGHT
+	A0, // DOWN
+	13, // LEFT
 	A1  // ENTER
 };
 

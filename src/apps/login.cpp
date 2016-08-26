@@ -3,6 +3,7 @@
 #include "../config.h"
 #include "../events.h"
 #include "../lcd.h"
+#include "../screensaver.h"
 
 byte connectedUser;
 static byte code[4];
@@ -71,10 +72,12 @@ static void login(byte data)
 	cancelTimerEvent(&eraseWrongPasswordTimer);
 	if (codeInt == STUDENT_CODE) {
 		connectedUser = STUDENT;
+		screensaverDelay = DELAY_BEFORE_SCREENSAVER_WHILE_LOGGED * 1000;
 		lcd.noBlink();
 		launchMenu();
 	} else if (codeInt == OPERATOR_CODE) {
 		connectedUser = OPERATOR;
+		screensaverDelay = DELAY_BEFORE_SCREENSAVER_WHILE_LOGGED * 1000;
 		lcd.noBlink();
 		launchMenu();
 	} else {
@@ -86,6 +89,8 @@ static void login(byte data)
 
 void launchLogin(void)
 {
+	screensaverDelay = DELAY_BEFORE_SCREENSAVER_WHILE_UNLOGGED * 1000;
+
 	lcd.clear();
 	//static const char connexion[] PROGMEM = "CONNEXION";
 	drawTitle(PSTR("CONNEXION"));

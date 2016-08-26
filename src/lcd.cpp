@@ -260,8 +260,8 @@ void newLcdScroll(const char *text, byte line, unsigned short speed)
 	stopLcdScroll(line);
 
 	scrollingLcdTexts[line] = (char *) text;
-	startPos[line] = 16;
-	stopPos[line]  = 16 + strlen(scrollingLcdTexts[line]);
+	startPos[line] = 20;
+	stopPos[line]  = 20 + strlen(scrollingLcdTexts[line]);
 
 	speeds[line] = speed;
 
