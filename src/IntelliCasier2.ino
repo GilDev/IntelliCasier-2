@@ -27,7 +27,7 @@ void setup() {
 
 	lcdInit();
 	eventsInit();
-	//alarmInit();
+	alarmInit();
 	launchLogin();
 	setTime(10, 0, 0, 6, 9, 2016);
 

@@ -1,5 +1,5 @@
-#ifndef NOTIFICATIONS_APP_H
-#define NOTIFICATIONS_APP_H
+#ifndef NOTIFICATIONS_H
+#define NOTIFICATIONS_H
 
 extern byte numberOfNotifications;
 

@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <avr/pgmspace.h>
 #include "about.h"
+#include "homework.h"
 #include "informations.h"
 #include "login.h"
 #include "notifications.h"
@@ -42,7 +43,7 @@ static void (*menuStudentCallbacks[])(void) = {
 	launchNotifications,
 	launchSchedule,
 	launchInformations,
-	NULL,
+	launchHomework,
 	launchAbout,
 	launchLogin
 };

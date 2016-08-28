@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "menu.h"
+#include "../alarm.h"
 #include "../config.h"
 #include "../events.h"
 #include "../lcd.h"
@@ -74,11 +75,13 @@ static void login(byte data)
 		connectedUser = STUDENT;
 		screensaverDelay = DELAY_BEFORE_SCREENSAVER_WHILE_LOGGED * 1000;
 		lcd.noBlink();
+		alarmOff();
 		launchMenu();
 	} else if (codeInt == OPERATOR_CODE) {
 		connectedUser = OPERATOR;
 		screensaverDelay = DELAY_BEFORE_SCREENSAVER_WHILE_LOGGED * 1000;
 		lcd.noBlink();
+		alarmOff();
 		launchMenu();
 	} else {
 		printLcdFromFlash(0, 3, PSTR("Mauvais mot de passe"));
@@ -98,6 +101,8 @@ void launchLogin(void)
 
 	writeBlankCode();
 	lcd.blink();
+
+	alarmOn();
 
 	setSingleClickHandler(UP, changeNumber, false);
 	setSingleClickHandler(DOWN, changeNumber, true);

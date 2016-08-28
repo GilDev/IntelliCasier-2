@@ -6,15 +6,15 @@
 unsigned short lightMax;
 bool ringing = false;
 bool alarmActivated;
+byte sensivity = ALARM_DEFAULT_SENSIVITY;
 
 static void ring(byte numberOfTime)
 {
 	ringing = true;
 	if (numberOfTime % 2) {
-		pinMode(BUZZER_PIN, OUTPUT);
-		analogWrite(BUZZER_PIN, 128);
+		digitalWrite(BUZZER_PIN, HIGH);
 	} else {
-		pinMode(BUZZER_PIN, INPUT);
+		digitalWrite(BUZZER_PIN, LOW);	
 	}
 
 	if (numberOfTime == 0) {
@@ -28,9 +28,9 @@ static void ring(byte numberOfTime)
 static void checkAlarm(byte data)
 {
 	unsigned short light = analogRead(PHOTORESISTOR_PIN);
-	if (light > lightMax) {
+	if (light < lightMax) {
 		lightMax = light;
-	} else if (light <= lightMax - ALARM_SENSIVITY && !ringing && alarmActivated) {
+	} else if (light >= lightMax + sensivity && !ringing && alarmActivated) {
 		ring(10);
 	}
 
@@ -48,18 +48,12 @@ void alarmOff(void)
 	alarmActivated = false;
 }
 
-void alarmScreensaver(void)
-{
-	alarmOn();
-	registerTimerEvent(2000, checkAlarm, 0);
-}
-
 void alarmInit(void)
 {
 	#ifdef ALARM
-	pinMode(BUZZER_PIN, INPUT);
+	pinMode(BUZZER_PIN, OUTPUT);
 	pinMode(PHOTORESISTOR_PIN, INPUT);
 	alarmOn();
-	registerTimerEvent(1000, checkAlarm, 0);
+	registerTimerEvent(2000, checkAlarm, 0);
 	#endif
 }

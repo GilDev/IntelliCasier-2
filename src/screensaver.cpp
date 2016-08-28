@@ -23,12 +23,14 @@ void showScreensaver(void)
 		Serial.print(F("Displaying screensaver\n"));
 	#endif
 
+	alarmOn();
+
 	lcd.noBlink();
 	lcd.clear();
 
 	drawTitle(PSTR("IntelliCasier"));
 	printLcdFromFlash(2, 2, PSTR("Gilles DEVILLERS"));
-	switch (numberOfNotifications > 0) {
+	switch (numberOfNotifications) {
 		case 1:
 			newLcdScroll("1 nouvelle notification", 3, 200);
 			break;

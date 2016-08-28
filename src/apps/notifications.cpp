@@ -15,7 +15,6 @@ void newNotification(void)
 {
 	if (numberOfNotifications < 3)
 		numberOfNotifications++;
-	printLcd(18, 3, numberOfNotifications);
 }
 
 static void printNotification(void) {

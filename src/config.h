@@ -18,10 +18,10 @@
 #define DELAY_BEFORE_SCREENSAVER_WHILE_LOGGED   30 // Disconnect user. In s
 
 #define BUZZER_PIN 12
-#define PHOTORESISTOR_PIN A7
+#define PHOTORESISTOR_PIN A6
 
-//#define ALARM // Define to activate alarm
-#define ALARM_SENSIVITY 100
+#define ALARM // Define to activate alarm
+#define ALARM_DEFAULT_SENSIVITY 100
 
 static const unsigned char buttonsPins[] = {
 	A2, // UP
